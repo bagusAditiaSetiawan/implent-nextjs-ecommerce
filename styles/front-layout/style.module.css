@@ -1,0 +1,87 @@
+.navbarFront{
+    background-color: #27ae60 !important;
+}
+
+.navbarFront #basic-nav-dropdown{
+    background-color: #27ae60 !important;
+}
+
+.bgColorPrimary{
+    background-color: #27ae60 !important;
+}
+.colorPrimary{
+    color: #27ae60;
+}
+
+.navbarFront a {
+    color: #fff !important;
+}
+.carouselFront {
+    margin-top: 12px;
+}
+
+.carouselFront img{
+    height: 350px;
+    border-radius: 20px;
+}
+
+.textTitle {
+    font-size: 1.42857rem;
+    font-weight: bold;
+}
+
+.productImage {
+    width: 100%;
+    height: 200px;
+}
+
+.productTitle {
+    font-size: 0.86rem;
+    font-weight: 400;
+}
+
+.productPrice {
+    font-size: 1rem;
+    font-weight: bold;
+}
+
+.productDetailTitle {
+    font-size: 1.28571rem;
+    font-weight: 800;
+}
+
+.productDetailPrice {
+    font-size: 2rem;
+    font-weight: 800;
+}
+
+.btnLogin {
+    width: 100%;
+    margin-top: 8px;
+    background-color: #27ae60;
+    border-color: #27ae60;
+    padding: 6px 0;
+    color: #fff;
+}
+
+.btnLogin:hover{
+    background-color: #fff;
+    border-color: #27ae60;
+    color: #27ae60;
+}
+
+.btnRegister:hover {
+    background-color: #27ae60;
+    border-color: #fff;
+    color: #fff;
+}
+
+.btnRegister{
+    background-color: #fff;
+    border-color: #27ae60;
+    color: #27ae60;
+    width: 100%;
+    margin-top: 8px;
+    padding: 6px 0;
+}
+
