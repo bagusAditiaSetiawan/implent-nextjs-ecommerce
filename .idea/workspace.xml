@@ -2,33 +2,14 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="67c527bc-b125-4679-9b76-5c245e901e31" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/components/buttons/buy.btn.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/buttons/cart.btn.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/carousel/corousel.front.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/forms/login.form.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/front-layout/footer.front.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/front-layout/navbar.front.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/layouts/front.layout.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/products/detail.product.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/products/item.product.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/components/products/wrapper.product.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/functions/auth.function.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/functions/carts.function.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/functions/product.function.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/next.config.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/_app.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/buying/[id].js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/carts.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/login.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pages/products/[id].js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/front-layout/style.module.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/styles/style.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/utility/axios/httpRequest.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/midtrans.function.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/functions/rajaongkir.function.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/components/front-layout/navbar.front.js" beforeDir="false" afterPath="$PROJECT_DIR$/components/front-layout/navbar.front.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/config.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pages/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pages/buying/[id].js" beforeDir="false" afterPath="$PROJECT_DIR$/pages/buying/[id].js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -41,6 +22,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectId" id="2ATow077wl5XvplQQI6Ki8KdnLx" />
   <component name="ProjectViewState">
     <option name="hideEmptyMiddlePackages" value="true" />
@@ -51,9 +35,17 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/laragon/www/ecommerce/functions",
+    "nodejs_package_manager_path": "npm",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2022.1.2\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\laragon\www\ecommerce\functions" />
+    </key>
+  </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -63,10 +55,24 @@
       <option name="presentableId" value="Default" />
       <updated>1655043170637</updated>
       <workItem from="1655043171917" duration="13000" />
+      <workItem from="1655600458798" duration="1844000" />
+      <workItem from="1655612134386" duration="2536000" />
+      <workItem from="1655653917746" duration="9293000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

@@ -17,7 +17,6 @@ export default function NavbarFront({ children }) {
 
         }
     }, []);
-    console.log(user);
 
     return (
         <>
