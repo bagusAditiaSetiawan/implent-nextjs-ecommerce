@@ -9,7 +9,7 @@ import {CartBtn} from "../../components/buttons/cart.btn";
 import {currentUser} from "../../functions/auth.function";
 import {toast} from "react-toastify";
 import {getCities, getProvinces, getCouriers, getCost} from "../../functions/rajaongkir.function";
-import {transactionPg} from "../../functions/midtrans.function";
+import {methods, transactionPg} from "../../functions/midtrans.function";
 function BuyingProduct() {
     const route = useRouter();
     const {id}  = route.query;
@@ -26,11 +26,24 @@ function BuyingProduct() {
         city_id: 0,
         city_name: "",
         address: "",
-        courier: "",
         shipping_cost: 0,
         shipping_service: "",
+        payment_type: "",
+        payment_mitra: "",
+        item_details: [],
+        customer_details: {},
+        shipping_name: "",
+        shipping_address: "",
+        shipping_courier: "",
+        shipping_cost: 0,
+        shipping_destination: 0,
+        shipping_destination_name: "",
+        shipping_from: 0,
+        shipping_from_name: "",
+
     });
 
+    const [mitras, setMitras] = useState([]);
     const [provinces, setProvinces] = useState([]);
     const [cities, setCities] = useState([]);
     const [couriers, setCouriers] = useState([]);
@@ -53,30 +66,45 @@ function BuyingProduct() {
     }, [transaction.province_id]);
 
     useEffect(async () => {
-        const product = await getDetailProduct(id);
-        setProduct(product);
+        const res = await getDetailProduct(id);
+        setProduct(res);
         setTransaction((transaction) => ({...transaction,
-            price: product.price_sell,
+            price: res.price_sell,
             amount: 1,
-            total: product.price_sell,
-            product_item_id: product.id,
+            total: res.price_sell,
+            product_item_id: res.id,
+            item_details: [{
+                id: res.id,
+                price: res.price_sell,
+                quantity: 1,
+                name: res.name,
+            }]
         }))
     }, [id]);
 
     useEffect(async () => {
         function getCostHandler() {
-            if(transaction.courier && transaction.city_id) {
+            if(transaction.shipping_courier && transaction.shipping_destination) {
                 getCost({
                     origin: product.seller.city_id,
-                    destination: transaction.city_id,
-                    courier: transaction.courier,
+                    destination: transaction.shipping_destination,
+                    courier: transaction.shipping_courier,
                     weight: product.weight,
-                }).then(res => setShippingCosts(res.data[0]))
+                }).then(res => {
+                    setTransaction({...transaction, shipping_from: product.seller.city_id, shipping_from_name: product.seller.city_name, })
+                    setShippingCosts(res.data[0])
+                })
             }
         }
         getCostHandler();
 
-    }, [transaction.courier ,transaction.city_id]);
+    }, [transaction.shipping_courier ,transaction.city_id]);
+
+    useEffect(() => {
+        methods(transaction.payment_type).then((res) => {
+            setMitras(res.data);
+        })
+    }, [transaction.payment_type]);
 
 
     useEffect(async () => {
@@ -84,11 +112,18 @@ function BuyingProduct() {
             const res = await currentUser();
             if(res.data && res.data.shipping) {
                 setTransaction(transaction => ({...transaction,
-                    city_id: res.data.shipping.city_id,
-                    city_name: res.data.shipping.city_name,
+                    shipping_destination: res.data.shipping.city_id,
+                    shipping_destination_name: res.data.shipping.city_name,
                     province_id: res.data.shipping.province_id,
                     province_name: res.data.shipping.province_name,
-                    address: res.data.shipping.address,
+                    shipping_address: res.data.shipping.address,
+                    shipping_name: res.data.profile.name,
+                    customer_details: {
+                        email: res.data.email,
+                        phone: res.data.profile.mobile,
+                        first_name: res.data.profile.name.split(' ')[0],
+                        last_name: res.data.profile.name.split(' ')[res.data.profile.name.split(' ').length-1],
+                    }
                 }))
                 setUser(res.data);
             }
@@ -101,18 +136,8 @@ function BuyingProduct() {
 
     const checkoutHandler = (e) => {
         e.preventDefault();
-        transactionPg({
-            transaction_details_gross_amount: transaction.total,
-            customer_details_name: user.profile.name,
-            customer_details_email: user.email,
-            customer_details_phone:user.profile.mobile,
-        }).then(res => {
-            const script = document.createElement("script");
-            script.src = "https://app.sandbox.midtrans.com/snap/snap.js";
-            script.setAttribute('data-client-key', MIDTRANCLIENT)
-            script.async = true;
-            document.body.appendChild(script);
-            console.log(script)
+        transactionPg(transaction).then(res => {
+            console.log(res)
         }).catch(e => console.log(e))
     }
     console.log(transaction)
@@ -132,9 +157,16 @@ function BuyingProduct() {
                             <p>{product.description}</p>
                             <Form.Control type="number" value={transaction.amount}
                             onChange={(e) => {
+                                const filter = transaction.item_details.filter(item=>item.id !== product.id);
                                 setTransaction((trans) => ({...trans, 
                                     amount: parseInt(e.target.value),
                                     total: product.price_sell * parseInt(e.target.value),
+                                    item_details: [...filter, {
+                                        id: product.id,
+                                        price: product.price_sell,
+                                        quantity: parseInt(e.target.value),
+                                        name: product.name,
+                                    }]
                                 }))
                             }}
                           required={true} />
@@ -157,10 +189,10 @@ function BuyingProduct() {
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Kota</Form.Label>
-                                <FormSelect value={transaction.city_id} onChange={(event) => {
+                                <FormSelect value={transaction.shipping_destination} onChange={(event) => {
                                     const city = cities.find(city => city.city_id === event.target.value);
                                     setTransaction((transaction) =>
-                                        ({...transaction, city_id: event.target.value, city_name: city.city_name}))
+                                        ({...transaction, shipping_destination: event.target.value, shipping_destination_name: city.city_name}))
                                 }}
                                 required={true}>
                                     <option value="">Pilih Kota</option>
@@ -174,16 +206,16 @@ function BuyingProduct() {
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Alamat</Form.Label>
-                                <Form.Control as="textarea" rows={3} value={transaction.address}
-                                    onChange={(event) => setTransaction({...transaction, address: event.target.value})}
+                                <Form.Control as="textarea" rows={3} value={transaction.shipping_address}
+                                    onChange={(event) => setTransaction({...transaction, shipping_address: event.target.value})}
                                     required={true}
                                 />
                             </Form.Group>
                             <Form.Group>
                                 <Form.Label>Kurir</Form.Label>
-                                <FormSelect value={transaction.courier} onChange={(event) => {
+                                <FormSelect value={transaction.shipping_courier} onChange={(event) => {
                                     setTransaction((transaction) =>
-                                        ({...transaction, courier: event.target.value}))
+                                        ({...transaction, shipping_courier: event.target.value}))
                                 }} required={true}>
                                     <option value="">Pilih Kurir</option>
                                     {couriers && couriers.map((courier) => (
@@ -211,6 +243,36 @@ function BuyingProduct() {
                                         <option value={cost.service}
                                                 key={cost.service}>
                                             {`${shippingCosts.code.toUpperCase()}-${cost.service} Rp. ${cost.cost[0].value}`}
+                                        </option>
+                                    ))}
+                                </FormSelect>
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Cara Pembayaran</Form.Label>
+                                <FormSelect value={transaction.payment_type} onChange={(event) => {
+                                    setTransaction((transaction) =>
+                                        ({...transaction, payment_type: event.target.value}))
+                                }} required={true}>
+                                    <option value="">Pilih Metode Pembayaran</option>
+                                    {['BANK_TRANSFER', 'CREDIT_CARD', 'EMONEY','OUTLET'].map((courier) => (
+                                        <option value={courier.toLocaleLowerCase()}
+                                                key={courier}>
+                                            {courier.toLocaleLowerCase().split('_').join(' ')}
+                                        </option>
+                                    ))}
+                                </FormSelect>
+                            </Form.Group>
+                            <Form.Group>
+                                <Form.Label>Mitra Pembayaran</Form.Label>
+                                <FormSelect value={transaction.payment_mitra} onChange={(event) => {
+                                    setTransaction((transaction) =>
+                                        ({...transaction, payment_mitra: event.target.value}))
+                                }} required={true}>
+                                    <option value="">Pilih Mitra</option>
+                                    {mitras && mitras.map((mitra) => (
+                                        <option value={mitra.name}
+                                                key={mitra.name}>
+                                            {mitra.name.toLocaleLowerCase().split('_').join(' ')}
                                         </option>
                                     ))}
                                 </FormSelect>

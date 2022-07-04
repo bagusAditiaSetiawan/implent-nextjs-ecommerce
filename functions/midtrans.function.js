@@ -1,11 +1,11 @@
 import {httpRequest} from "../utility/axios/httpRequest";
 
 
-export const transactionPg = async (transaction = {
-      transaction_details_gross_amount,
-      customer_details_name,
-      customer_details_email,
-      customer_details_phone,
-    }) => {
-    return await httpRequest(true).post("/pg/transactions", {...transaction});
+export const transactionPg = async (transaction) => {
+    console.log(transactionPg);
+    return await httpRequest(true).post("/transactions/checkout", {...transaction});
+}
+
+export const methods = async (transaction) => {
+  return await httpRequest(false).get(`/paymentgateway/method?type=${transaction}`);
 }
