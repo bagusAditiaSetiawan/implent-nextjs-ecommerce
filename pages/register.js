@@ -4,6 +4,7 @@ import {RegisterForm} from "../components/forms/register.form";
 import {singUp} from "../functions/auth.function";
 import {toast} from "react-toastify";
 import {useRouter} from "next/router";
+import Head from "next/head";
 
 export default function Register() {
     const router = useRouter();
@@ -27,6 +28,10 @@ export default function Register() {
     }
     return (
         <FrontLayout>
+            <Head>
+                <title>GiftLove - Register</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
             <Container>
                 <Row className="mt-3">
                     <Col md={{

@@ -8,6 +8,7 @@ import {toast} from "react-toastify";
 import {getCities, getProvinces, getCouriers, getCost} from "../../functions/rajaongkir.function";
 import {methods, transactionPg} from "../../functions/midtrans.function";
 import { BuyNowForm } from "../../components/forms/buynow.form";
+import Head from "next/head";
 function BuyingProduct() {
     const route = useRouter();
     const {id}  = route.query;
@@ -137,11 +138,22 @@ function BuyingProduct() {
         e.preventDefault();
         transactionPg(transaction).then(res => {
             route.push(`/payments/${res.data.order_id}`)
-        }).catch(e => console.log(e))
+            toast.success("Success membuat transaksi silahkan bayar")
+        }).catch((e) => {
+            if(e.response && e.response.status === 400) {
+                toast.warning(e.response.data.message[0])
+                return;
+            }
+            toast.warning("Terjadi kesalahan tolong coba")
+        })
     }
 
     return (
         <FrontLayout>
+            <Head>
+                <title>GiftLove - Buy Now</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
             <Container>
                 {product && product.id && (
                     <BuyNowForm 

@@ -7,6 +7,7 @@ import WrapperProduct from "../components/products/wrapper.product";
 import {getProducts} from "../functions/product.function";
 import {currentUser} from "../functions/auth.function";
 import {useRouter} from "next/router";
+import Head from "next/head";
 
 export default function Carts() {
     const router = useRouter();
@@ -31,6 +32,10 @@ export default function Carts() {
 
     return (
         <FrontLayout>
+             <Head>
+                <title>GiftLove - Carts</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
             <Container>
                 <CarouselFront />
                 <Row className="mt-3">

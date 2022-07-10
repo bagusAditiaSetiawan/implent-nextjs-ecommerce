@@ -9,3 +9,8 @@ export const transactionPg = async (transaction) => {
 export const methods = async (transaction) => {
   return await httpRequest(false).get(`/paymentgateway/method?type=${transaction}`);
 }
+
+
+export const getVaByOrderId = async (orderId) => {
+  return await httpRequest(true).get(`/transactions/va/${orderId}`);
+}

@@ -4,6 +4,7 @@ import {useRouter} from "next/router";
 import {useEffect, useState} from "react";
 import {DetailProduct} from "../../components/products/detail.product";
 import {getDetailProduct} from "./../../functions/product.function";
+import Head from "next/head";
 
 function ProductDetail() {
     const {id}  = useRouter().query;
@@ -22,6 +23,10 @@ function ProductDetail() {
     }, [productId]);
     return (
         <FrontLayout>
+            <Head>
+                <title>GiftLove - {product.name}</title>
+                <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+            </Head>
             <Container>
                 {product && product.id && (
                     <Row className="mt-3">

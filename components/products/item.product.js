@@ -6,7 +6,7 @@ import Link from "next/link";
 export function ItemProduct({ product }) {
     return (
         <Link href={`/products/${product.id}`}>
-            <Card>
+            <Card className={styles.productItem}>
                 <CardImg src={`${baseApi}/fileupload/${product.image.id}`} className={styles.productImage} />
                 <Card.Body>
                     <Card.Title className={styles.productTitle}>{product.name}</Card.Title>

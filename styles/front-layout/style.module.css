@@ -6,6 +6,18 @@
     background-color: #27ae60 !important;
 }
 
+.textBold {
+    font-weight: bold;
+}
+
+.listTransaction {
+    background-color: #27ae60 !important;
+    font-size: x-large;
+    padding: 10px;
+    text-align: center;
+    color: #fff;
+}
+
 .bgColorPrimary{
     background-color: #27ae60 !important;
 }
@@ -85,3 +97,31 @@
     padding: 6px 0;
 }
 
+.transactionItem {
+    margin: 18px 0;
+}
+
+.paragItem {
+    font-size: small;
+}
+@media (max-width: 576px) {
+    .productItem{
+        margin: 10px 0;
+    }
+    .productItem img {
+        width: 100%;
+        height: 100px;
+    }
+    .carouselFront img{
+        height: 180px;
+    }
+    .textTitle{
+        text-align: center;
+        font-size: 1.2rem;
+    }
+
+    .transactionItem img{
+        width: 100%;
+        height: 200px;
+    }
+}

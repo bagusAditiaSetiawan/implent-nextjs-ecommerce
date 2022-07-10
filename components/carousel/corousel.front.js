@@ -4,20 +4,22 @@ import styles from "./../../styles/front-layout/style.module.css";
 function CarouselFront() {
     const sliders = [
         {
-            title: 'Cash back',
+            id: 1,
+            title: '',
             description: 'dapatkan banyak cashback dari kami',
             image_url: 'https://accurate.id/wp-content/uploads/2021/01/accurate.id-Cashback-adalah-Pengertian-dan-Dampaknya-dalam-Strategi-Marketing.png',
         },
         {
-            title: 'Kurir Cepat',
-            description: 'Pilih kurir pilihan kami',
+            id: 2,
+            title: '',
+            description: '',
             image_url: 'https://pintarjualan.id/wp-content/uploads/2021/03/jasa-kurir-terbaik-murah-cepat.png',
         },
     ];
     return (
         <Carousel className={styles.carouselFront}>
             {sliders.map((slider) => (
-                <Carousel.Item key={slider.title}>
+                <Carousel.Item key={slider.id}>
                     <img
                         className="d-block w-100"
                         src={slider.image_url}
