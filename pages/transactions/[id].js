@@ -10,7 +10,7 @@ import styles from "./../../styles/front-layout/style.module.css";
 import { baseApi } from "../../config";
 function TransactionDetail() {
     const route = useRouter();
-    const {id}  = route.query;
+    const {id = 0}  = route.query;
     const [transaction, setTransaction] = useState({});
     useEffect(() => {
         getMyTransactionById(id).then((res)=>{
@@ -58,7 +58,7 @@ function TransactionDetail() {
                                                 <Image
                                                 width={80}
                                                 height={80}
-                                                src={`${baseApi}/fileupload/${item.product.image.id}`} />
+                                                src={`${baseApi}/fileupload/${item.product.image.filename}`} />
                                                 <p>{item.product.name}</p>
                                             </div>
                                             <div>

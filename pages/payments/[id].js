@@ -8,12 +8,16 @@ function PaymentVA() {
     const route = useRouter();
     const {id}  = route.query;
     const [va, setVa] = useState({});
+    const [method, setMethod] = useState({});
     useEffect(() => {
-        getVaByOrderId(id).then((res)=>{
-            setVa(res.data);
-        }).catch((e) => {
-            console.log(e);
-        })
+        if(id) {
+            getVaByOrderId(id).then((res)=>{
+                setVa(res.data.data);
+                setMethod(res.data.method)
+            }).catch((e) => {
+                console.log(e);
+            })
+        }       
     }, [id]);
 
     return (

@@ -22,7 +22,7 @@ export function BuyNowForm({
         <Form onSubmit={checkoutHandler}>
             <Row className="mt-3">
                 <Col md={4}>
-                    <Image src={`${baseApi}/fileupload/${product.image.id}`} className="img-fluid" />
+                    <Image src={`${baseApi}/fileupload/${product.image.filename}`} className="img-fluid" />
                 </Col>
                 <Col md={4}>
                     <h2 className={styles.productDetailTitle}>{product.name}</h2>

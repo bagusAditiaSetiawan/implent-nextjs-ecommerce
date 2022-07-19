@@ -27,7 +27,7 @@ export function DetailProduct({product}) {
     return (
         <>
             <Col>
-                <Image src={`${baseApi}/fileupload/${product.image.id}`} className="img-fluid" />
+                <Image src={`${baseApi}/fileupload/${product.image.filename}`} className="img-fluid" />
             </Col>
             <Col>
                 <h2 className={styles.productDetailTitle}>{product.name}</h2>

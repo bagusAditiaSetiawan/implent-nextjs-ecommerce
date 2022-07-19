@@ -11,7 +11,7 @@ import { BuyNowForm } from "../../components/forms/buynow.form";
 import Head from "next/head";
 function BuyingProduct() {
     const route = useRouter();
-    const {id}  = route.query;
+    const {id = 0}  = route.query;
     const [product, setProduct] = useState({
         seller: {}
     });
@@ -27,7 +27,7 @@ function BuyingProduct() {
         address: "",
         shipping_cost: 0,
         shipping_service: "",
-        payment_type: "",
+        payment_type: "BANK_TRANSFER",
         payment_mitra: "",
         item_details: [],
         customer_details: {},

@@ -11,7 +11,7 @@ export const MethodPaymentBuyNowForm = ({setTransaction, mitras=[], transaction 
                 }} required={true}>
                     <option value="">Pilih Metode Pembayaran</option>
                     {['BANK_TRANSFER', 'CREDIT_CARD', 'EMONEY','OUTLET'].map((courier) => (
-                        <option value={courier.toLocaleLowerCase()}
+                        <option value={courier}
                                 key={courier}>
                             {courier.toLocaleLowerCase().split('_').join(' ')}
                         </option>

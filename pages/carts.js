@@ -27,7 +27,7 @@ export default function Carts() {
 
     useEffect(async () => {
         const resProduct = await getProducts(1, 6);
-        setProduct(resProduct);
+        setProduct(resProduct.data);
     }, []);
 
     return (

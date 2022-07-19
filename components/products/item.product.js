@@ -7,7 +7,7 @@ export function ItemProduct({ product }) {
     return (
         <Link href={`/products/${product.id}`}>
             <Card className={styles.productItem}>
-                <CardImg src={`${baseApi}/fileupload/${product.image.id}`} className={styles.productImage} />
+                <CardImg src={`${baseApi}/fileupload/${product.image.filename}`} className={styles.productImage} />
                 <Card.Body>
                     <Card.Title className={styles.productTitle}>{product.name}</Card.Title>
                     <Card.Title className={styles.productPrice}>Rp. {product.price_buy}</Card.Title>
