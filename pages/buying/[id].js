@@ -52,33 +52,41 @@ function BuyingProduct() {
     useEffect(() => {
         getProvinces().then((res) => {
             setProvinces(res.data)
+        }).catch((e) => {
+            console.log(e)
         })
         getCouriers().then(res => {
             setCouriers(res.data);
+        }).catch(e => {
+            console.log(e)
         })
     }, []);
 
     useEffect(() => {
         getCities(transaction.province_id).then((res) => {
             setCities(res.data)
-        })
+        }).catch(e => console.log(e));
     }, [transaction.province_id]);
 
     useEffect(async () => {
-        const res = await getDetailProduct(id);
-        setProduct(res);
-        setTransaction((transaction) => ({...transaction,
-            price: res.price_sell,
-            amount: 1,
-            total: res.price_sell,
-            product_item_id: res.id,
-            item_details: [{
-                id: res.id,
+        try{
+            const res = await getDetailProduct(id);
+            setProduct(res);
+            setTransaction((transaction) => ({...transaction,
                 price: res.price_sell,
-                quantity: 1,
-                name: res.name,
-            }]
-        }))
+                amount: 1,
+                total: res.price_sell,
+                product_item_id: res.id,
+                item_details: [{
+                    id: res.id,
+                    price: res.price_sell,
+                    quantity: 1,
+                    name: res.name,
+                }]
+            }))
+        }catch(e) {
+            console.log(e)
+        }
     }, [id]);
 
     useEffect(async () => {
@@ -93,6 +101,8 @@ function BuyingProduct() {
                 }).then(res => {
                     setTransaction({...transaction, shipping_from: product.seller.city_id, shipping_from_name: product.seller.city_name, })
                     setShippingCosts(res.data[0])
+                }).catch(e => {
+                    console.log(e)
                 })
             }
         }
