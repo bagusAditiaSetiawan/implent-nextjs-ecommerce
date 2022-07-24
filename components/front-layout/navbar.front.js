@@ -1,23 +1,14 @@
 import {Container, Navbar, Nav, NavDropdown} from "react-bootstrap";
 import styles from "./../../styles/front-layout/style.module.css";
 import Link from "next/link";
-import {useEffect, useState} from "react";
-import {currentUser, signOut} from "../../functions/auth.function";
 import {useRouter} from "next/router";
+import { useDispatch, useSelector } from "react-redux";
+import { logoutAction } from "../../actions/user.action";
 
 export default function NavbarFront({ children }) {
+    const dispatch = useDispatch();
     const router = useRouter();
-    const [user, setUser] = useState({});
-
-    useEffect(async () => {
-        try{
-            const auth = await currentUser();
-            setUser(auth.data);
-        }catch (e) {
-
-        }
-    }, []);
-
+    const {user} = useSelector(state => state.userCurrent);
     return (
         <>
             <Navbar bg="dark" expand="lg" className={styles.navbarFront}>
@@ -37,7 +28,7 @@ export default function NavbarFront({ children }) {
                             </Link>
                         </Nav>
                         <Nav className="justify-content-end" >
-                            {!user.id && (
+                            {!user && (
                                 <Link href="/login">
                                     <Nav.Link href="/login">Login</Nav.Link>
                                 </Link>
@@ -57,7 +48,7 @@ export default function NavbarFront({ children }) {
                                     <NavDropdown.Item
                                     onClick={(event) => {
                                         event.preventDefault();
-                                        localStorage.removeItem('token');
+                                        dispatch(logoutAction())
                                         router.push("/login");
                                     }}
                                     href="#logout">Keluar</NavDropdown.Item>

@@ -1,8 +1,8 @@
 import {httpRequest} from "../utility/axios/httpRequest";
 
 
-export const getMyTransaction = async () => {
-    return await httpRequest(true).get(`/transactions/mytransaction`);
+export const getMyTransaction = async (page = 1, limit = 10) => {
+    return await httpRequest(true).get(`/transactions/mytransaction?page=${page}&limit=${limit}&sort=DESC`);
 }
 
 

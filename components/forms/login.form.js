@@ -3,7 +3,7 @@ import styles from "../../styles/front-layout/style.module.css";
 import {useState} from "react";
 import Link from "next/link";
 
-export function LoginForm({submit}) {
+export function LoginForm({submit, loading}) {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     return (
@@ -20,7 +20,7 @@ export function LoginForm({submit}) {
                 <Form.Label>Password</Form.Label>
                 <Form.Control type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
             </Form.Group>
-            <button className={styles.btnLogin}>Masuk</button>
+            <button className={styles.btnLogin} disabled={loading}>Masuk</button>
             <Link href="/register">
                 <button type="button" className={styles.btnRegister}>Daftar</button>
             </Link>

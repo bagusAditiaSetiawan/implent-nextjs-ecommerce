@@ -2,32 +2,37 @@ import {useState, useEffect} from "react"
 import FrontLayout from "../components/layouts/front.layout";
 import {Card, Col, Container, Row, Image} from "react-bootstrap";
 import styles from "./../styles/front-layout/style.module.css";
-import {currentUser} from "../functions/auth.function";
 import {useRouter} from "next/router";
-import { getMyTransaction } from "../functions/transactions.function";
 import { baseApi } from "../config";
 import Link from "next/link";
 import Head from "next/head";
+import { useDispatch, useSelector } from "react-redux";
+import { getMyTransactionAction } from "../actions/transaction.action";
+import { CartBtn } from "../components/buttons/cart.btn";
 
 export default function Transactions() {
     const router = useRouter();
-    const [user, setUser] = useState({});
-    const [transactions, setTransaction] = useState([]);
-    useEffect(async () => {
-        try{
-            const auth = await currentUser();
-            setUser(auth.data);
-        }catch (e) {
-            localStorage.removeItem("token");
-            router.push("/login");
-        }
-    }, []);
+    const dispatch = useDispatch();
+    const {list = {}, loading, error: errorMyTransaction} = useSelector(state => state.mytransaction);
+    const {data = [], meta = {}} = list;
+    const {pages = 0} = meta;
+    const [page, setPage] = useState(1);
+    const {error} = useSelector(state => state.userCurrent);
 
     useEffect(async () => {
-        getMyTransaction().then(res=>{
-            setTransaction([...res.data])
-        })
-    }, []);
+        if(error && error.status === 401) {
+            localStorage.removeItem('token')
+            router.push('/login');
+        }
+    }, [error]);
+
+    useEffect(async () => {
+        dispatch(getMyTransactionAction(page, 2))
+    }, [page]);
+
+    const handleMoreMyTransaction = () => {
+        setPage(page+1);
+    }
 
     const logs = {
         WAITING_PAYMENT: 'Menunggu Pembayaran',
@@ -51,7 +56,7 @@ export default function Transactions() {
                         offset: 3,
                     }}>
                     <h2 className={styles.listTransaction } >Daftar Transaksi</h2>
-                    {transactions.map(transaction => {
+                    {data.map(transaction => {
                         return (
                         <Card className={styles.transactionItem} key={transaction.id}>
                             <Card.Body>
@@ -80,7 +85,10 @@ export default function Transactions() {
                             </Card.Body>
                         </Card>
                         )
-                    })}                   
+                    })}        
+                    {page < pages && (
+                        <CartBtn onClick={handleMoreMyTransaction}>More</CartBtn>
+                    )}           
                     </Col>
                 </Row>
             </Container>

@@ -5,9 +5,11 @@ import {singUp} from "../functions/auth.function";
 import {toast} from "react-toastify";
 import {useRouter} from "next/router";
 import Head from "next/head";
+import { useDispatch } from "react-redux";
 
 export default function Register() {
     const router = useRouter();
+    const dispatch = useDispatch();
 
     async function registerHandler(username, email, password) {
         try {

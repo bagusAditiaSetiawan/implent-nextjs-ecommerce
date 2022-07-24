@@ -3,7 +3,7 @@ import { CartBtn } from "../buttons/cart.btn";
 
 export function TotalFormBuyNow({ transaction=  {} }) {
     return (
-            <Card className="p-4">
+            <Card className="p-4 mt-2">
                     <Card.Body>
                         <ListGroup variant="flush">
                             <ListGroup.Item className="d-flex justify-content-between">

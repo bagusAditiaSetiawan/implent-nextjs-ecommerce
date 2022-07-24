@@ -12,7 +12,7 @@ export async function getDetailProduct(id ) {
 export async function getProducts(page = 1, limit = 10) {
     try{
         const res = await httpRequest(false).get(`/product-items?limit=${limit}&page=${page}&sort=DESC`);
-        return res.data;
+        return res;
     }catch (e) {
         console.log(e)
     }

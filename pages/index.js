@@ -4,15 +4,18 @@ import CarouselFront from "../components/carousel/corousel.front";
 import {Container, Row} from "react-bootstrap";
 import styles from "./../styles/front-layout/style.module.css";
 import WrapperProduct from "../components/products/wrapper.product";
-import {getProducts} from "../functions/product.function";
 import Head from "next/head";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductAction } from "../actions/product.action";
 
 export default function Home() {
-  const [products, setProduct] = useState([]);
+  const dispatch = useDispatch();
+  const {list = {}, loading, error} = useSelector(state => state.productList);
+  const {data = []} = list;
+  const [page, setPage] = useState(1);
   useEffect(async () => {
-      const resProduct = await getProducts(1, 6);
-      setProduct(resProduct.data);
-  }, []);
+      dispatch(getProductAction(page, 6))
+  }, [page]);
 
   return (
       <FrontLayout>
@@ -24,7 +27,7 @@ export default function Home() {
               <CarouselFront />
               <Row className="mt-3">
                   <h2 className={styles.textTitle} >Cari Produk Terbaru</h2>
-                  <WrapperProduct products={products} />
+                  <WrapperProduct products={data} />
               </Row>
           </Container>
 

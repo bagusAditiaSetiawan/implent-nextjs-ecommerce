@@ -8,27 +8,17 @@ import {getProducts} from "../functions/product.function";
 import {currentUser} from "../functions/auth.function";
 import {useRouter} from "next/router";
 import Head from "next/head";
+import { useSelector } from "react-redux";
 
 export default function Carts() {
     const router = useRouter();
-    const [user, setUser] = useState({});
-    const [products, setProduct] = useState([]);
-
+    const {error} = useSelector(state => state.userCurrent);
     useEffect(async () => {
-        try{
-            const auth = await currentUser();
-            setUser(auth.data);
-        }catch (e) {
-            localStorage.removeItem("token");
-            router.push("/login");
+        if(error && error.status === 401) {
+            localStorage.removeItem('token')
+            router.push('/login');
         }
-    }, []);
-
-
-    useEffect(async () => {
-        const resProduct = await getProducts(1, 6);
-        setProduct(resProduct.data);
-    }, []);
+    }, [error]);
 
     return (
         <FrontLayout>
@@ -39,8 +29,7 @@ export default function Carts() {
             <Container>
                 <CarouselFront />
                 <Row className="mt-3">
-                    <h2 className={styles.textTitle} >Cari Produk Terbaru</h2>
-                    <WrapperProduct products={products} />
+
                 </Row>
             </Container>
 

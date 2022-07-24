@@ -5,25 +5,46 @@ import {login} from "../functions/auth.function";
 import {toast} from "react-toastify";
 import {useRouter} from "next/router";
 import Head from "next/head";
+import { useDispatch, useSelector } from "react-redux";
+import { loginAction, loginCleanupAction } from "../actions/user.action";
+import { useEffect } from "react";
 
 export default function Login() {
+    const dispatch = useDispatch();
     const router = useRouter();
+    const {token, loading, error} = useSelector(state => state.userLogin);
 
     async function LoginHandler(email, password) {
-        try {
-            const res = await login(email, password);
-            localStorage.setItem('token', res.data.access_token);
+        dispatch(loginAction(email, password));
+    }
+
+    const tokenHandler = () => {  
+        if(token) {
             toast.success("Sukses Login");
             router.push("/")
-        } catch (e) {
-            if(e.response && e.response.status === 400) {
-                toast.warning(e.response.data.message[0])
+        }      
+    }
+
+    useEffect(() => {
+        tokenHandler();
+        return () => {
+            dispatch(loginCleanupAction())
+        };
+    }, [token])
+
+    useEffect(() => {
+        const errorHandler = () => {
+            if(error && error.data && error.data.statusCode === 400) {
+                toast.error(error.data.message[0]);
             }
-            if(e.response && e.response.status === 401) {
-                toast.warning("Email & Password Salah")
+
+            if(error && error.data && error.data.statusCode === 401) {
+                toast.error("Login & Email Salah");
             }
         }
-    }
+        errorHandler();
+    }, [error]);
+
     return (
         <FrontLayout>
             <Head>
@@ -39,7 +60,7 @@ export default function Login() {
                         <Card>
                             <Card.Body>
                                 <Card.Text>Sign In</Card.Text>
-                                <LoginForm submit={LoginHandler} />
+                                <LoginForm submit={LoginHandler} loading={loading} />
                             </Card.Body>
                         </Card>
                     </Col>
